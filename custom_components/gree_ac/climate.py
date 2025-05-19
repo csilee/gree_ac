@@ -11,7 +11,6 @@ from .greeclimate.device import (
     TEMP_MIN,
     TEMP_MIN_F,
     FanSpeed,
-    Quiet,
     HorizontalSwing,
     Mode,
     TemperatureUnits,
@@ -20,9 +19,6 @@ from .greeclimate.device import (
 
 from homeassistant.components.climate import (
     ATTR_HVAC_MODE,
-    QUIET_AUTO,
-    QUIET_OFF,
-    QUIET_ON,
     FAN_AUTO,
     FAN_HIGH,
     FAN_LOW,
@@ -83,13 +79,6 @@ FAN_MODES = {
 }
 FAN_MODES_REVERSE = {v: k for k, v in FAN_MODES.items()}
 
-QUIET_MODES = {
-    Quiet.Auto: QUIET_AUTO,
-    Quiet.Off: QUIET_OFF,
-    Quiet.On: QUIET_ON,
-}
-QUIET_MODES_REVERSE = {v: k for k, v in QUIET_MODES.items()}
-
 SWING_MODES = [SWING_OFF, SWING_VERTICAL, SWING_HORIZONTAL, SWING_BOTH]
 
 
@@ -130,7 +119,6 @@ class GreeClimateEntity(GreeEntity, ClimateEntity):
     _attr_preset_modes = PRESET_MODES
     _attr_fan_modes = [*FAN_MODES_REVERSE]
     _attr_swing_modes = SWING_MODES
-    _attr_quiet_modes = QUIET_MODES
     _attr_name = None
     _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_min_temp = TEMP_MIN
@@ -271,21 +259,6 @@ class GreeClimateEntity(GreeEntity, ClimateEntity):
             raise ValueError(f"Invalid fan mode: {fan_mode}")
 
         self.coordinator.device.fan_speed = FAN_MODES_REVERSE.get(fan_mode)
-        await self.coordinator.push_state_update()
-        self.async_write_ha_state()
-
-    @property
-    def quiet_mode(self) -> str | None:
-        """Return the current quiet mode for the device."""
-        quietspeed = self.coordinator.device.quiet
-        return QUIET_MODES.get(quietspeed)
-
-    async def async_set_quiet_mode(self, quiet_mode: str) -> None:
-        """Set new target quiet mode."""
-        if quiet_mode not in QUIET_MODES_REVERSE:
-            raise ValueError(f"Invalid quiet mode: {quiet_mode}")
-
-        self.coordinator.device.quiet = QUIET_MODES_REVERSE.get(quiet_mode)
         await self.coordinator.push_state_update()
         self.async_write_ha_state()
 
