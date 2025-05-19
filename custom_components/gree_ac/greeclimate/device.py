@@ -70,6 +70,13 @@ class FanSpeed(IntEnum):
 
 
 @unique
+class Quiet(IntEnum):
+    Off = 0
+    Auto = 1
+    On = 2
+
+
+@unique
 class HorizontalSwing(IntEnum):
     Default = 0
     FullSwing = 1
@@ -472,6 +479,14 @@ class Device(DeviceProtocol2, Taskable):
         self.set_property(Props.FAN_SPEED, int(value))
 
     @property
+    def quiet(self) -> int:
+        return self.get_property(Props.QUIET)
+
+    @quiet.setter
+    def quiet(self, value: int):
+        self.set_property(Props.QUIET, int(value))
+
+    @property
     def fresh_air(self) -> bool:
         return bool(self.get_property(Props.FRESH_AIR))
 
@@ -527,14 +542,6 @@ class Device(DeviceProtocol2, Taskable):
     @vertical_swing.setter
     def vertical_swing(self, value: int):
         self.set_property(Props.SWING_VERT, int(value))
-
-    @property
-    def quiet(self) -> bool:
-        return self.get_property(Props.QUIET)
-
-    @quiet.setter
-    def quiet(self, value: bool):
-        self.set_property(Props.QUIET, 2 if value else 0)
 
     @property
     def turbo(self) -> bool:
