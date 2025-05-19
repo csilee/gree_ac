@@ -19,6 +19,9 @@ from .greeclimate.device import (
 
 from homeassistant.components.climate import (
     ATTR_HVAC_MODE,
+    QUIET_AUTO,
+    QUIET_OFF,
+    QUIET_ON,
     FAN_AUTO,
     FAN_HIGH,
     FAN_LOW,
@@ -78,6 +81,13 @@ FAN_MODES = {
     FanSpeed.High: FAN_HIGH,
 }
 FAN_MODES_REVERSE = {v: k for k, v in FAN_MODES.items()}
+
+QUIET_MODES = {
+    Quiet.Auto: QUIET_AUTO,
+    Quiet.Off: QUIET_OFF,
+    Quiet.On: QUIET_ON,
+}
+QUIET_MODES_REVERSE = {v: k for k, v in QUIET_MODES.items()}
 
 SWING_MODES = [SWING_OFF, SWING_VERTICAL, SWING_HORIZONTAL, SWING_BOTH]
 

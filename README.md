@@ -32,7 +32,7 @@ Before you start, ensure you have the following prerequisites:
 2. **Add the Custom Repository:**
    - Click on the "Integrations" tab.
    - Click on the three-dot menu in the upper right corner and select "Custom Repositories."
-   - In the "Repository" field, enter the URL: `https://github.com/ov1d1u/gree_ac`.
+   - In the "Repository" field, enter the URL: `https://github.com/csilee/gree_ac`.
    - In the "Category" dropdown, select "Integration."
    - Click the "Add" button.
 
